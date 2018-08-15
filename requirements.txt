@@ -2,4 +2,5 @@ numpy
 tensorflow
 keras
 git+https://www.github.com/keras-team/keras-contrib.git
+keras-word-char-embd
 keras-global-self-attention

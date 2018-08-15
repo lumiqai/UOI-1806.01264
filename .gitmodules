@@ -1,0 +1,3 @@
+[submodule "CoNNL2003eng"]
+	path = CoNNL2003eng
+	url = https://github.com/PoWWoP/CoNNL2003eng.git
