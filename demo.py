@@ -11,7 +11,7 @@ DATA_TRAIN_PATH = os.path.join(DATA_ROOT, 'train.txt')
 DATA_VALID_PATH = os.path.join(DATA_ROOT, 'valid.txt')
 DATA_TEST_PATH = os.path.join(DATA_ROOT, 'test.txt')
 
-WORD_EMBD_PATH = 'dataset/glove.6B.100d.txt'
+WORD_EMBD_PATH = 'glove.6B.100d.txt'
 
 TAGS = {
     'O': 0,
