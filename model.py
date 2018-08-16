@@ -28,6 +28,7 @@ def build_model(token_num,
                                      trainable=embedding_weights is None,
                                      name='Embedding'))
     model.add(keras.layers.Bidirectional(keras.layers.LSTM(units=rnn_units,
+                                                           recurrent_dropout=0.4,
                                                            return_sequences=True),
                                          name='Bi-LSTM'))
     model.add(Attention(name='Attention'))
