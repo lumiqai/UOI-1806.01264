@@ -1,5 +1,5 @@
 import keras
-from keras_global_self_attention import Attention
+from keras_self_attention import Attention
 from keras_contrib.layers import CRF
 
 
@@ -31,7 +31,8 @@ def build_model(token_num,
                                                            recurrent_dropout=0.4,
                                                            return_sequences=True),
                                          name='Bi-LSTM'))
-    model.add(Attention(name='Attention'))
+    model.add(Attention(attention_activation='sigmoid',
+                        name='Attention'))
     crf = CRF(units=tag_num, sparse_target=True, name='CRF')
     model.add(crf)
 
