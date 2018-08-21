@@ -7,7 +7,8 @@ def build_model(token_num,
                 tag_num,
                 embedding_dim=100,
                 embedding_weights=None,
-                rnn_units=100):
+                rnn_units=100,
+                lr=1e-3):
     """Build the model for predicting tags.
 
     :param token_num: Number of tokens in the word dictionary.
@@ -37,7 +38,7 @@ def build_model(token_num,
     model.add(crf)
 
     model.compile(
-        optimizer='adam',
+        optimizer=keras.optimizers.Adam(lr=lr),
         loss=crf.loss_function,
         metrics=[crf.accuracy],
     )

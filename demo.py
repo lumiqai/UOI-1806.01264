@@ -130,18 +130,18 @@ if os.path.exists(MODEL_PATH):
     model.load_weights(MODEL_PATH, by_name=True)
 
 print('Fitting...')
-model.fit_generator(
-    generator=batch_generator(train_sentences, train_taggings, train_steps),
-    steps_per_epoch=train_steps,
-    epochs=EPOCHS,
-    validation_data=batch_generator(valid_sentences, valid_taggings, valid_steps),
-    validation_steps=valid_steps,
-    callbacks=[
-        keras.callbacks.EarlyStopping(monitor='val_loss', patience=2),
-        keras.callbacks.EarlyStopping(monitor='val_acc', patience=2),
-    ],
-    verbose=True,
-)
+for lr in [1e-3, 1e-4, 1e-5]:
+    model.fit_generator(
+        generator=batch_generator(train_sentences, train_taggings, train_steps),
+        steps_per_epoch=train_steps,
+        epochs=EPOCHS,
+        validation_data=batch_generator(valid_sentences, valid_taggings, valid_steps),
+        validation_steps=valid_steps,
+        callbacks=[
+            keras.callbacks.EarlyStopping(monitor='val_acc', patience=5),
+        ],
+        verbose=True,
+    )
 
 model.save_weights(MODEL_PATH)
 
