@@ -2,6 +2,8 @@ import os
 import codecs
 import numpy
 import keras
+import seaborn
+import matplotlib.pyplot as plt
 from keras_wc_embd import get_dicts_generator, get_batch_input
 from model import build_model
 
@@ -186,3 +188,28 @@ precision = (matched_num + eps) / (total_pred + eps)
 recall = (matched_num + eps) / (total_true + eps)
 f1 = 2 * precision * recall / (precision + recall)
 print('P: %.4f  R: %.4f  F: %.4f' % (precision, recall, f1))
+
+
+print('Generating sample hitmap...')
+sample_text = ['pedigree', 'choice', 'cuts', 'in', 'gravy', 'with', 'beef', 'and', 'liver',
+               'canned', 'dog', 'food', '13.2', 'ounces', 'pack', 'of', '24']
+sample_input = []
+for word in sample_text:
+    if word in word_dict:
+        sample_input.append(word_dict[word])
+    else:
+        sample_input.append(word_dict['UNK'])
+sample_input = numpy.asarray([sample_input])
+
+model = build_model(token_num=len(word_dict),
+                    tag_num=len(TAGS),
+                    return_attention=True)
+model.load_weights(MODEL_PATH, by_name=True)
+attention = model.predict(sample_input)[1][0]
+ax = seaborn.heatmap(attention.tolist(),
+                     vmin=0.0,
+                     vmax=1.0,
+                     cmap='Reds',
+                     xticklabels=sample_text,
+                     yticklabels=sample_text)
+plt.savefig('sample.png')
